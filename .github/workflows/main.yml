@@ -15,15 +15,14 @@ on:
       - main
 
   schedule:
-  # Every Sunday at 10:00 AM IST (4:30 AM UTC)
-- cron: '30 4 * * 0'
+    # Every Sunday at 10:00 AM IST (4:30 AM UTC)
+    - cron: '30 4 * * 0'
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     timeout-minutes: 120
-
     continue-on-error: true
 
     steps:
@@ -46,8 +45,7 @@ jobs:
         env:
           ENV: qa
           HEADLESS: true
-        run: |
-          npm run test:UAT_Part1 || true
+        run: npm run test:UAT_Part1 || true
 
       - name: Upload UAT Part 1 Report
         if: always()
@@ -61,8 +59,7 @@ jobs:
         env:
           ENV: qa
           HEADLESS: true
-        run: |
-          npm run test:UAT_Part2 || true
+        run: npm run test:UAT_Part2 || true
 
       - name: Upload UAT Part 2 Report
         if: always()
