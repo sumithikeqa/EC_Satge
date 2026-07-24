@@ -1,0 +1,72 @@
+name: Playwright Tests
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  schedule:
+  # Every Sunday at 10:00 AM IST (4:30 AM UTC)
+- cron: '30 4 * * 0'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 120
+
+    continue-on-error: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Run UAT Part 1
+        env:
+          ENV: qa
+          HEADLESS: true
+        run: |
+          npm run test:UAT_Part1 || true
+
+      - name: Upload UAT Part 1 Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: UAT_Part1_Report
+          path: html-report/
+
+      - name: Run UAT Part 2
+        if: always()
+        env:
+          ENV: qa
+          HEADLESS: true
+        run: |
+          npm run test:UAT_Part2 || true
+
+      - name: Upload UAT Part 2 Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: UAT_Part2_Report
+          path: html-report/

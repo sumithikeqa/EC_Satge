@@ -1,0 +1,58 @@
+{
+  "name": "playwright-typescript-playwright-test",
+  "version": "1.0.0",
+  "description": "EC-UI-Automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:all": "npx playwright test",
+    "test:all-browsers": "npx playwright test --project=Chrome --project=Firefox --project=Edge",
+    "test:single": "npx playwright test tests/functional/LoginPage.test.ts --project=Chrome",
+    "test:UAT_Part1": "npx playwright test tests/functional/UAT_TC_Part1.test.ts --project=Chrome",
+    "test:UAT_Part2": "npx playwright test tests/functional/UAT_TC_Part2.test.ts --project=Chrome",
+    "test:PRECONDITION": "npx playwright test tests/functional/PreCondition_TestCases.test.ts --project=Chrome",
+    "test:High": "npx playwright test /tests/functional/*.test.ts --project=High",
+    "test:smoke": "npx playwright test --grep @smoke --project=Chrome",
+    "test:sanity": "npx playwright test --grep @sanity --project=Chrome",
+    "test:regression": "npx playwright test --grep @regression --project=Chrome",
+    "test:serial": "npx playwright test --grep @Smoke --workers=1 --project=Chrome",
+    "rerun:failed": "npx playwright test --grep @failed --project=Chrome --project=Firefox --project=Edge",
+    "test:parallel": "npx playwright test --headless --workers=100%",
+    "test:ui": "npx playwright test --grep @Smoke --ui",
+    "test:record": "npx playwright codegen",
+    "allureReport": "allure serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "GIT URL"
+  },
+  "author": "Sumit",
+  "license": "MIT",
+  "dependencies": {
+    "@types/adm-zip": "^0.5.0",
+    "@types/crypto-js": "^4.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "adm-zip": "^0.5.10",
+    "cross-env": "^7.0.3",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^17.2.3",
+    "eslint": "^8.38.0",
+    "eslint-plugin-import": "^2.27.5",
+    "exceljs": "^4.3.0",
+    "i": "^0.3.7",
+    "lighthouse": "^12.2.1",
+    "npm": "^10.8.3",
+    "pdfjs-dist-es5": "^2.13.216",
+    "pg": "^8.10.0",
+    "playwright": "^1.60.0",
+    "typescript": "^5.0.4",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.1",
+    "@types/node": "^25.5.0",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.0-beta.12"
+  }
+}
