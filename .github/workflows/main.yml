@@ -43,7 +43,7 @@ jobs:
 
       - name: Run UAT Part 1
         env:
-          ENV: qa
+          ENV: stage
           HEADLESS: true
         run: npm run test:UAT_Part1 || true
 
@@ -57,7 +57,7 @@ jobs:
       - name: Run UAT Part 2
         if: always()
         env:
-          ENV: qa
+          ENV: stage
           HEADLESS: true
         run: npm run test:UAT_Part2 || true
 
