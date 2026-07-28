@@ -1079,7 +1079,7 @@ export class ECUATPage {
         this.NEW_AUDIT_BUTTON = page.locator(`//span[text()='New Audit']`);
         this.AUDIT_TYPE_DROPDOWN = page.locator(`//mat-label[normalize-space()='Audit Type']/ancestor::div[contains(@class,"mat-mdc-form-field-flex")]//button`);
         this.AUDIT_OWNER_DROPDOWN = page.locator(`//mat-label[normalize-space()='Audit Owner']/ancestor::div[contains(@class,"mat-mdc-form-field-flex")]//button`);
-        this.FRAMEWORKS_DROPDOWN = page.locator(`(//mat-label[contains(normalize-space(),'Frameworks')]/ancestor::div[contains(@class,"mat-mdc-form-field-flex")]//button)[1]`);
+        this.FRAMEWORKS_DROPDOWN = page.locator(`(//mat-label[contains(normalize-space(),'Frameworks')]/ancestor::div[contains(@class,"mat-mdc-form-field-flex")]//button)[2]`);
         this.AUDITOR_DROPDOWN = page.locator(`//mat-label[normalize-space()='Auditor']/ancestor::div[contains(@class,"mat-mdc-form-field-flex")]//button`);
         this.AUDIT_NAME = page.locator(`(//*[contains(text(),'Active')]/ancestor::tr//a)[1]`);
         this.AUDIT_CONTROL = page.locator(`//a[text()='Controls ']`);
@@ -9866,7 +9866,6 @@ export class ECUATPage {
 
         console.log("'No Data Available' is visible. Selecting Framework.");
         await this.clickAndSelectFramework();
-
         console.log("Checking checkbox");
         await this.MAP_FRAMEWORK_CHECKBOX.waitFor({ state: "visible", timeout: 10000 });
         await this.MAP_FRAMEWORK_CHECKBOX.scrollIntoViewIfNeeded();
@@ -9926,7 +9925,7 @@ export class ECUATPage {
         await this.clickOnCreate();
         await this.validateSuccessMsg();
 
-        await this.verifyNewEmployeeAndClickThreeDots();
+        await this.verifyNewEmployeeAndClickThreeDots1();
         await this.clickNotifyButton();
         await this.validateNotifySuccessMsg();
         console.log("Employee created successfully.");
@@ -10000,6 +9999,34 @@ export class ECUATPage {
         console.log("Clicked on 3 dots");
 
     }
+
+   
+ 
+async verifyNewEmployeeAndClickThreeDots1() {
+ 
+        console.log(`Verifying Employee Email: ${this.createdEmployeeEmail}`);
+ 
+        const emailCell = this.page.locator(`//td[@data-column-header='Email']//div[normalize-space()='${this.createdEmployeeEmail}']`);
+ 
+        for (let i = 0; i < 10; i++) {
+            if (await emailCell.isVisible().catch(() => false)) {
+                console.log(`Employee found: ${this.createdEmployeeEmail}`);
+ 
+                await this.page.locator(`//td[@data-column-header='Email']//div[normalize-space()='${this.createdEmployeeEmail}']/ancestor::tr//span[@class='s-dots-vertical']`).click();
+ 
+                console.log("Clicked on 3 dots");
+                return;
+            } else {
+                console.log("Employee not found. Moving to next page...");
+                await this.NEXT_PAGE.click();
+                await this.page.waitForTimeout(2000);
+            }
+        }
+ 
+        throw new Error(`Employee not found: ${this.createdEmployeeEmail}`);
+ 
+    }
+
 
 
 
